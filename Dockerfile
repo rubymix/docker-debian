@@ -11,9 +11,17 @@ RUN python get-pip.py && rm get-pip.py
 RUN pip install awscli
 
 # Go
-RUN curl -O https://storage.googleapis.com/golang/go1.7.1.linux-amd64.tar.gz
-RUN tar -C /usr/local -xzf go1.7.1.linux-amd64.tar.gz && rm go1.7.1.linux-amd64.tar.gz
-ENV PATH ${PATH}:/usr/local/go/bin
+ENV GOLANG_VERSION 1.7.1
+ENV GOLANG_DOWNLOAD_URL https://golang.org/dl/go$GOLANG_VERSION.linux-amd64.tar.gz
+ENV GOLANG_DOWNLOAD_SHA256 43ad621c9b014cde8db17393dc108378d37bc853aa351a6c74bf6432c1bbd182
+RUN curl -fsSL "$GOLANG_DOWNLOAD_URL" -o golang.tar.gz \
+    && echo "$GOLANG_DOWNLOAD_SHA256 golang.tar.gz" | sha256sum -c - \
+    && tar -C /usr/local -xzf golang.tar.gz \
+    && rm golang.tar.gz
+
+ENV GOPATH /go
+ENV PATH ${PATH}:/usr/local/go/bin:${GOPATH}/bin
+RUN mkdir -p "$GOPATH/src" "$GOPATH/bin" && chmod -R 777 "$GOPATH"
 
 # Node.js
 RUN LATEST_NODE=$(curl http://nodejs.org/dist/latest-argon/ 2> /dev/null | grep -o href=\".*linux-x64.tar.gz\" | awk -F "\"" '{print $2}') && \
