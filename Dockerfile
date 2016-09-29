@@ -28,9 +28,6 @@ RUN LATEST_NODE=$(curl http://nodejs.org/dist/latest-argon/ 2> /dev/null | grep 
 RUN mkdir -p /usr/local/node && tar xzf latest-node.tar.gz -C /usr/local/node --strip-components=1 && rm latest-node.tar.gz
 ENV PATH ${PATH}:/usr/local/node/bin
 
-# NPM
-RUN npm install -g bower gulp nodemon
-
 # MySQL client
 RUN apt-get install -q -y libnuma1 libaio1
 RUN mkdir /tmp/mysql && cd /tmp/mysql
