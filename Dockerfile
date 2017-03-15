@@ -2,7 +2,7 @@ FROM debian:jessie
 MAINTAINER Junghyun Kim <zerocool@sulhee.com>
 
 RUN apt-get update -q
-RUN DEBIAN_FRONTEND=noninteractive apt-get install -q -y --no-install-recommends sudo curl build-essential cmake ca-certificates git python zip
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -q -y --no-install-recommends sudo curl build-essential cmake ca-certificates git openssh-client python zip
 
 # AWS CLI
 RUN curl -O https://bootstrap.pypa.io/get-pip.py
