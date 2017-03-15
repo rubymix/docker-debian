@@ -24,8 +24,9 @@ ENV PATH $GOPATH/bin:/usr/local/go/bin:$PATH
 RUN mkdir -p "$GOPATH/src" "$GOPATH/bin" && chmod -R 777 "$GOPATH"
 
 # Node.js
-RUN LATEST_NODE=$(curl http://nodejs.org/dist/latest-argon/ 2> /dev/null | grep -o href=\".*linux-x64.tar.gz\" | awk -F "\"" '{print $2}') && \
-    curl -L -o latest-node.tar.gz http://nodejs.org/dist/latest-argon/${LATEST_NODE}
+ENV NODEJS_DOWNLOAD_URL http://nodejs.org/dist/latest-v6.x/
+RUN LATEST_NODE=$(curl ${NODEJS_DOWNLOAD_URL} 2> /dev/null | grep -o href=\".*linux-x64.tar.gz\" | awk -F "\"" '{print $2}') && \
+    curl -L -o latest-node.tar.gz ${NODEJS_DOWNLOAD_URL}${LATEST_NODE}
 RUN mkdir -p /usr/local/node && tar xzf latest-node.tar.gz -C /usr/local/node --strip-components=1 && rm latest-node.tar.gz
 ENV PATH ${PATH}:/usr/local/node/bin
 
