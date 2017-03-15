@@ -31,13 +31,13 @@ RUN mkdir -p /usr/local/node && tar xzf latest-node.tar.gz -C /usr/local/node --
 ENV PATH ${PATH}:/usr/local/node/bin
 
 # MySQL client
+ENV MYSQL_VERSION 5.7.17
 RUN apt-get install -q -y libnuma1 libaio1
 RUN mkdir /tmp/mysql && cd /tmp/mysql
-RUN curl -LO http://dev.mysql.com/get/Downloads/MySQL-5.6/mysql-server_5.6.33-1debian8_amd64.deb-bundle.tar
-RUN tar xvf mysql-server_5.6.33-1debian8_amd64.deb-bundle.tar
-RUN dpkg -i mysql-common_5.6.33-1debian8_amd64.deb
-RUN dpkg -i mysql-community-client_5.6.33-1debian8_amd64.deb
-RUN dpkg -i libmysqlclient18_5.6.33-1debian8_amd64.deb
+RUN curl -LO https://dev.mysql.com/get/Downloads/MySQL-5.7/mysql-common_${MYSQL_VERSION}-1debian8_amd64.deb && \
+    curl -LO https://dev.mysql.com/get/Downloads/MySQL-5.7/mysql-community-client_${MYSQL_VERSION}-1debian8_amd64.deb && \
+    dpkg -i mysql-common_${MYSQL_VERSION}-1debian8_amd64.deb && \
+    dpkg -i mysql-community-client_${MYSQL_VERSION}-1debian8_amd64.deb
 RUN rm -rf /tmp/mysql
 
 
