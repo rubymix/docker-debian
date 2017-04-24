@@ -1,8 +1,8 @@
-FROM debian:jessie
+FROM debian:jessie-slim
 MAINTAINER Junghyun Kim <zerocool@sulhee.com>
 
 RUN apt-get update -q
-RUN DEBIAN_FRONTEND=noninteractive apt-get install -q -y --no-install-recommends sudo curl build-essential cmake ca-certificates git openssh-client python zip
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -q -y --no-install-recommends sudo build-essential ca-certificates cmake curl git openssh-client python rsync zip
 
 # AWS CLI
 RUN curl -O https://bootstrap.pypa.io/get-pip.py
