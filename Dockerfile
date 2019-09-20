@@ -23,18 +23,6 @@ ENV PATH $GOPATH/bin:/usr/local/go/bin:$PATH
 
 RUN mkdir -p "$GOPATH/src" "$GOPATH/bin" && chmod -R 777 "$GOPATH"
 
-# Node.js
-ENV NODEJS_DOWNLOAD_URL https://nodejs.org/dist/latest-v8.x/
-ENV NODEJS_SHASUMS256 SHASUMS256.txt
-RUN LATEST_NODE=$(curl ${NODEJS_DOWNLOAD_URL} 2> /dev/null | grep -o href=\".*linux-x64.tar.gz\" | awk -F "\"" '{print $2}') \
-    && curl -SLO ${NODEJS_DOWNLOAD_URL}${LATEST_NODE} \
-    && curl -SLO ${NODEJS_DOWNLOAD_URL}${NODEJS_SHASUMS256} \
-    && grep ${LATEST_NODE} ${NODEJS_SHASUMS256} | sha256sum -c - \
-    && mkdir -p /usr/local/node \
-    && tar -C /usr/local/node -xzf ${LATEST_NODE} --strip-components=1 \
-    && rm ${LATEST_NODE} ${NODEJS_SHASUMS256}
-ENV PATH ${PATH}:/usr/local/node/bin
-
 
 # Clean
 RUN rm -rf /var/lib/apt/lists/*
