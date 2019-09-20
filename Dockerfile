@@ -1,4 +1,4 @@
-FROM debian:stretch-slim
+FROM debian:10-slim
 MAINTAINER Junghyun Kim <zerocool@sulhee.com>
 
 RUN apt-get update -q
