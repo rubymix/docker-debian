@@ -10,9 +10,9 @@ RUN python get-pip.py && rm get-pip.py
 RUN pip install awscli
 
 # Go
-ENV GOLANG_VERSION 1.10.2
+ENV GOLANG_VERSION 1.13
 ENV GOLANG_DOWNLOAD_URL https://golang.org/dl/go$GOLANG_VERSION.linux-amd64.tar.gz
-ENV GOLANG_DOWNLOAD_SHA256 4b677d698c65370afa33757b6954ade60347aaca310ea92a63ed717d7cb0c2ff
+ENV GOLANG_DOWNLOAD_SHA256 68a2297eb099d1a76097905a2ce334e3155004ec08cdea85f24527be3c48e856
 RUN curl -fsSL "$GOLANG_DOWNLOAD_URL" -o golang.tar.gz \
     && echo "$GOLANG_DOWNLOAD_SHA256 golang.tar.gz" | sha256sum -c - \
     && tar -C /usr/local -xzf golang.tar.gz \
